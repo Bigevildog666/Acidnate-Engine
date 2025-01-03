@@ -32,3 +32,6 @@ bld/
 
 # Cmake Output
 [Oo]ut/
+/Third Party/Angelscript/tests
+/Third Party/Angelscript/samples
+/Third Party/Angelscript/docs
