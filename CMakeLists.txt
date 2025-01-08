@@ -1,21 +1,68 @@
-﻿# CMakeList.txt : CMake project for CMakeProject1, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.14)
 
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+project(Acidnate-Engine)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Vulkan/Volk
+add_subdirectory(External/volk)
+
+# GLFW
+add_subdirectory(External/glfw-3.4)
+
+# GLM
+add_subdirectory(External/glm)
+
+
+# set all Source Files 
+file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp")
+
+# Add source to this project's executable
+add_executable(${CMAKE_PROJECT_NAME})
+target_sources(${CMAKE_PROJECT_NAME} PUBLIC ${MY_SOURCES} ${AngelscriptAddon})
+target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Source")
+
+
+
+if (MSVC) 
+  SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/PROFILE")
 endif()
 
-project ("CMakeProject1")
+# Add lbraries aka thirdparty stuff
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE volk glfw glm::glm)
+#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE volk glfw stb_image plog imgui tomlplusplus::tomlplusplus glad glm::glm)
 
-# Add source to this project's executable.
-add_executable (CMakeProject1 "CMakeProject1.cpp" "CMakeProject1.h")
+# stb_image
+# add_subdirectory(Thirdparty/stb_image)
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET CMakeProject1 PROPERTY CXX_STANDARD 20)
-endif()
+# plog
+# add_subdirectory(Thirdparty/plog-1.1.10)
 
-# TODO: Add tests and install targets if needed.
+# imgui
+# add_subdirectory(Thirdparty/imgui-docking)
+
+# tomlplusplus
+# include(FetchContent)
+# FetchContent_Declare(
+#    tomlplusplus
+#    GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
+#    GIT_TAG v3.4.0
+# )
+# FetchContent_MakeAvailable(tomlplusplus)
+
+# AngelScript 
+# add_subdirectory(Thirdparty/angelscript/sdk/angelscript/projects/cmake)
+# include_directories(Thirdparty/angelscript/sdk/add_on/scriptstdstring
+#					Thirdparty/angelscript/sdk/add_on/scriptbuilder)
+# set(AngelscriptAddon 
+# 	Thirdparty/angelscript/sdk/add_on/scriptstdstring/scriptstdstring.cpp    
+#	Thirdparty/angelscript/sdk/add_on/scriptstdstring/scriptstdstring.h
+#	Thirdparty/angelscript/sdk/add_on/scriptbuilder/scriptbuilder.cpp
+#	Thirdparty/angelscript/sdk/add_on/scriptbuilder/scriptbuilder.h)
+
+
+
+
+

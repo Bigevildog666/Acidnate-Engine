@@ -35,3 +35,9 @@ bld/
 /Third Party/Angelscript/tests
 /Third Party/Angelscript/samples
 /Third Party/Angelscript/docs
+/External/Angelscript/docs
+/External/Angelscript/samples
+/External/Angelscript/tests
+/External/glfw-3.4/docs
+/External/glfw-3.4/examples
+/External/glm/doc
