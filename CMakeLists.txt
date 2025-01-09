@@ -15,6 +15,15 @@ add_subdirectory(External/glfw-3.4)
 # GLM
 add_subdirectory(External/glm)
 
+# stb_image
+add_subdirectory(External/stb_image)
+
+# imgui
+add_subdirectory(External/imgui-docking)
+
+# plog
+add_subdirectory(External/plog-1.1.10)
+
 
 # set all Source Files 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp")
@@ -31,17 +40,14 @@ if (MSVC)
 endif()
 
 # Add lbraries aka thirdparty stuff
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE volk glfw glm::glm)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE volk glfw glm::glm stb_image imgui plog)
 #target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE volk glfw stb_image plog imgui tomlplusplus::tomlplusplus glad glm::glm)
 
-# stb_image
-# add_subdirectory(Thirdparty/stb_image)
 
-# plog
-# add_subdirectory(Thirdparty/plog-1.1.10)
 
-# imgui
-# add_subdirectory(Thirdparty/imgui-docking)
+
+
+
 
 # tomlplusplus
 # include(FetchContent)
